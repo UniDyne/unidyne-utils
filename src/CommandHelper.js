@@ -14,7 +14,7 @@ function parseArgs(args) {
         if((/^\/|-+/).test(val)) {
             var kv = val.replace(/^\/|-+/,'').split(/:|=/);
             if(kv.length == 1) {
-                params[[kv[0]] = true;
+                params[kv[0]] = true;
             } else params[kv[0]] = kv[1];
         } else {
             params.unnamed.push(val);

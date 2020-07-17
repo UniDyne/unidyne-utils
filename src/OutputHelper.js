@@ -61,7 +61,7 @@ function logToFile(level, message, data) {
 
 
 // hook process for uncaught exceptions
-funciton activateDebugHook() {
+function activateDebugHook() {
     process.on('uncaughtException', function(err) {
         if(typeof err == 'string')
             return module.exports.debug(err);
