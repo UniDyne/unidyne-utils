@@ -1,9 +1,8 @@
-const fs = require("fs");
-
 
 const hexDigits = "0123456789abcdef";
 
 // RFC4122 - Random UUID
+// TODO: Expand to cover different UUID types
 function createUUID() {
     const s = [];
     for(var i = 0; i < 36; i++)
@@ -22,12 +21,6 @@ function createUUID() {
 }
 
 
-function getFileBase64(filePath) {
-    const data = fs.readFileSync(filePath);
-    return data.toString('base64');
-}
-
-
 module.exports = {
     Output: require('./src/OutputHelper'),
     Async: require('./src/AsyncHelper'),
@@ -38,7 +31,6 @@ module.exports = {
 
 
     createUUID: createUUID,
-    getFileBase64: getFileBase64,
 
 
     atob: function(str) {

@@ -2,9 +2,12 @@ const fs = require("fs"),
     crypto = require('crypto');
 
 module.exports = {
-    getFileBase64: function (filePath) {
-		const data = fs.readFileSync(filePath);
-		return data.toString('base64');
+    getBase64: function (filePath) {
+		return (fs.readFileSync(filePath)).toString('base64');
+	},
+
+	getJson: function (filePath) {
+		return JSON.parse(fs.readFileSync(filePath));
 	},
 
     md5: function (str) {
