@@ -28,6 +28,8 @@ module.exports = {
 
     File: require('./src/FileHelper'),
 
+    IDs: require('./src/IDHelper'),
+
 
 
     createUUID: createUUID,
