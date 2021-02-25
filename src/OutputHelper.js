@@ -51,10 +51,13 @@ function logToFile(level, message, data) {
         message,
         JSON.stringify(data)
     ];
+
+    try { fs.mkdirSync(path.join(process.cwd(), 'log')); } catch(e) {}
+
     const logFile = path.join(process.cwd(), 'log', `${path.basename(process.argv[1], '.js')}_${mkDateCode(false)}.log`);
 
     // append
-    const out = fs.createWriteStream(logfile, {flags:'a+'});
+    const out = fs.createWriteStream(logFile, {flags:'a+'});
     out.write(`${logData.join('\t')}\n`);
     out.close();
 }
@@ -89,7 +92,7 @@ module.exports = {
     },
 
     error: function(message, data) {
-        console.error(`\x1b[31m${message}\x1b[0m`);
+        console.error(`\x1b[31;5m${message}\x1b[0m`);
         logToFile('ERROR', message, data);
     },
 
@@ -100,6 +103,7 @@ module.exports = {
 
     debug: function(message, data) {
         console.log(`\x09\x1b[35m${message}\x1b[0m`);
+        console.log(data);
         logToFile('DEBUG', message, data);
     },
 
