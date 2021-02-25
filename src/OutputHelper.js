@@ -7,27 +7,17 @@ const fs = require("fs"),
 // Adapted from:
 // https://stackoverflow.com/questions/16697791/nodejs-get-filename-of-caller-function/29581862
 function getCallingModule() {
-    // save original function
+    // save original
     const original = Error.prepareStackTrace;
+    Error.prepareStackTrace = function(err,stack) { return stack; }
 
-    var callingModule;
-    try {
-        var err = new Error();
-        var current;
-
-        // override prepareStackTrace
-        Error.prepareStackTrace = function(err, stack) { return stack; };
-
-        // unwind stack and stop when file name changes
-        current = err.stack.shift().getFileName();
-        while(err.stack.length > 0 && callingModule == current)
-            callingModule = err.stack.shift().getFileName();
-        callingModule = path.basename(callingModule, '.js');
-    } catch(e){}
-
-    // put original function back
+    var err = new Error(), current = err.stack.shift().getFileName(), callingModule = current;
+    while(err.stack.length > 0 && callingModule == current)
+        callingModule = err.stack.shift().getFileName();
+    
+    // put it back
     Error.prepareStackTrace = original;
-    return callingModule;
+    return path.basename(callingModule,'.js');
 }
 
 
