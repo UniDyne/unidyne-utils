@@ -49,7 +49,7 @@ function logToFile(level, message, data) {
         getCallingModule(),
         level,
         message,
-        JSON.stringify(data)
+        JSON.stringify(data, replaceErrors)
     ];
 
     try { fs.mkdirSync(path.join(process.cwd(), 'log')); } catch(e) {}
@@ -60,6 +60,15 @@ function logToFile(level, message, data) {
     const out = fs.createWriteStream(logFile, {flags:'a+'});
     out.write(`${logData.join('\t')}\n`);
     out.close();
+}
+
+function replaceErrors(k, v) {
+    if(v instanceof Error) {
+        var error = {};
+        Object.getOwnPropertyNames(v).forEach(key => error[key] = v[key]);
+        return error;
+    }
+    return v;
 }
 
 
