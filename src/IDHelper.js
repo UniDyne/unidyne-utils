@@ -9,6 +9,7 @@ function rotate(point, rx, ry, n) {
     [point.x, point.y] = [point.y, point.x];
   }
 
+const hexDigits = "0123456789abcdef";
 
 module.exports = {
 
